@@ -1,0 +1,39 @@
+@host = https://localhost:7093
+
+### 1. Register
+POST {{host}}/api/Auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Ali",
+  "lastName": "triki",
+  "username": "userali",
+  "email": "ali@gmail.com",
+  "password": "Ali_triki2023"
+}
+
+### 2. Login
+# @name login
+POST {{host}}/api/Auth/token
+Content-Type: application/json
+
+{
+  "email": "ali@gmail.com",
+  "password": "Ali_triki2023"
+}
+
+### 3. Add role admin
+POST {{host}}/api/Auth/addrole
+Content-Type: application/json
+
+{
+  "userId": "854b303f-bdaf-4ede-a088-1faa506e9030",
+  "role": "admin"
+}
+
+### 4. WeatherForecast sans token (401)
+GET {{host}}/WeatherForecast
+
+### 5. WeatherForecast avec token admin (200)
+GET {{host}}/WeatherForecast
+Authorization: Bearer {{login.response.body.$.token}}
